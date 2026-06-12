@@ -314,12 +314,12 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 .note-box { margin-top: 8px; }
 .note-box summary { cursor: pointer; color: #888; font-size: 0.82em; padding: 2px 0; user-select: none; list-style: none; }
 .note-box summary::-webkit-details-marker { display: none; }
-.note-box summary::before { content: '\\1F4DD '; }
+.note-box summary::before { content: '📝 '; }
 .note-box[open] summary { color: #D97757; }
 .note-box textarea { width: 100%; min-height: 50px; max-height: 200px; padding: 6px 8px; margin-top: 4px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 0.88em; resize: vertical; box-sizing: border-box; }
 .note-box textarea:focus { outline: none; border-color: #D97757; }
 .note-box .note-hint { font-size: 0.72em; color: #aaa; margin-top: 2px; }
-.session.has-note .session-title::after, .picks-session.has-note .picks-session-title::after { content: ' \\1F4DD'; font-size: 0.85em; opacity: 0.6; }
+.session.has-note .session-title::after, .picks-session.has-note .picks-session-title::after { content: ' 📝'; font-size: 0.85em; opacity: 0.6; }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2c3e50; color: white; padding: 10px 18px; border-radius: 6px; font-size: 0.9em; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
 .toast.show { opacity: 1; }
 </style>
@@ -29351,12 +29351,12 @@ function showToast(msg, ms) {
 // with localStorage only, and Excel export still works on local picks.
 // ============================================================================
 const firebaseConfig = {
-    apiKey: "REPLACE_ME",
-    authDomain: "REPLACE_ME.firebaseapp.com",
-    projectId: "REPLACE_ME",
-    storageBucket: "REPLACE_ME.appspot.com",
-    messagingSenderId: "REPLACE_ME",
-    appId: "REPLACE_ME"
+    apiKey: "AIzaSyDAoXsnRrXfWagP5gPUG1ac78OUyOFb6tU",
+    authDomain: "atc2026-agenda.firebaseapp.com",
+    projectId: "atc2026-agenda",
+    storageBucket: "atc2026-agenda.firebasestorage.app",
+    messagingSenderId: "691487981633",
+    appId: "1:691487981633:web:066389f8665681579786c0"
 };
 
 const authBtn = document.getElementById('auth-btn');
@@ -29415,7 +29415,7 @@ if (!configReady) {
         import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-auth.js'),
         import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-firestore.js'),
     ]);
-    const { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } = authMod;
+    const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, browserPopupRedirectResolver } = authMod;
     const { getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp } = fsMod;
 
     const app = initializeApp(firebaseConfig);
@@ -29587,18 +29587,36 @@ if (!configReady) {
         }
     });
 
-    authBtn.addEventListener('click', async () => {
-        if (currentUid) {
-            await signOut(auth);
-        } else {
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (e) {
-                console.error('sign-in failed', e);
-                showToast('Sign-in failed: ' + (e.code || e.message), 3500);
+    // Try popup first (faster on desktop); fall back to redirect when COOP/blockers
+    // prevent the popup from communicating back — common on GitHub Pages.
+    async function signInGoogle() {
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (e) {
+            const fallbackCodes = [
+                'auth/popup-blocked',
+                'auth/popup-closed-by-user',
+                'auth/cancelled-popup-request',
+                'auth/operation-not-supported-in-this-environment',
+                'auth/web-storage-unsupported',
+            ];
+            if (fallbackCodes.includes(e.code)) {
+                console.warn('popup failed, falling back to redirect', e.code);
+                await signInWithRedirect(auth, provider);
+                return;
             }
+            console.error('sign-in failed', e);
+            showToast('Sign-in failed: ' + (e.code || e.message), 3500);
         }
+    }
+
+    authBtn.addEventListener('click', async () => {
+        if (currentUid) await signOut(auth);
+        else await signInGoogle();
     });
+
+    // Handle return from signInWithRedirect (no-op if popup succeeded)
+    getRedirectResult(auth).catch(e => console.error('redirect result error', e));
 }
 </script>
 </body>
