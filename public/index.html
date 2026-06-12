@@ -28543,9 +28543,6 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 <div id="picks-content">
 <div class="picks-header"><h2>★ My Picks</h2>
 <p>Sessions you've starred. Conflicts (overlapping times on the same day) are highlighted.</p></div>
-<div class="picks-toolbar">
-<button class="picks-btn danger" id="picks-clear">Clear All</button>
-</div>
 <div id="picks-list"></div>
 </div>
 
@@ -29279,14 +29276,6 @@ function escapeHtml(s) {
     if (s == null) return '';
     return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);
 }
-
-document.getElementById('picks-clear').addEventListener('click', () => {
-    if (!confirm('Clear all starred sessions?')) return;
-    localStorage.removeItem(PICKS_KEY);
-    syncStarUI();
-    updatePicksBadge();
-    renderPicks();
-});
 
 // Initialize on load
 syncStarUI();
