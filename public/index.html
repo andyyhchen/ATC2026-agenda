@@ -7,10 +7,30 @@
 <style>
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; background: #F9F5F1; color: #2D2D2D; line-height: 1.5; }
-.header { background: #1a1a1a; color: #F9F5F1; padding: 24px 20px; text-align: center; }
-.header h1 { margin: 0; font-size: 1.8em; }
-.header p { margin: 8px 0 0; opacity: 0.9; }
-.stats-bar { text-align: center; font-size: 0.82em; color: #666; padding: 6px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+.header { background: #1a1a1a; color: #F9F5F1; padding: 18px 20px; position: relative; }
+.header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.header-text { flex: 1 1 auto; min-width: 0; }
+.header h1 { margin: 0; font-size: 1.6em; line-height: 1.15; }
+.header p { margin: 4px 0 0; opacity: 0.85; font-size: 0.86em; }
+.header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.header-actions button { font-size: 0.82em; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #F9F5F1; border-radius: 4px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+.header-actions button:hover { background: rgba(255,255,255,0.12); border-color: #F9F5F1; }
+.header-actions button[hidden] { display: none; }
+.header-actions .auth-user { color: #F9F5F1; font-size: 0.82em; opacity: 0.85; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-actions .sync-indicator { font-size: 0.72em; opacity: 0.7; min-width: 0; color: #F9F5F1; }
+.header-actions .sync-indicator.saving { color: #F0B500; opacity: 1; }
+.header-actions .sync-indicator.saved { color: #B8E0B0; opacity: 1; }
+.stats-bar { text-align: center; font-size: 0.78em; color: #666; padding: 4px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+@media (max-width: 600px) {
+  .header { padding: 12px 14px; }
+  .header h1 { font-size: 1.2em; }
+  .header p { font-size: 0.78em; }
+  .header-inner { gap: 8px; }
+  .header-actions { width: 100%; justify-content: flex-start; gap: 6px; }
+  .header-actions button { font-size: 0.78em; padding: 5px 10px; }
+  .header-actions .auth-user { max-width: 110px; font-size: 0.76em; }
+  .stats-bar { font-size: 0.72em; padding: 3px; }
+}
 
 /* View tabs */
 .view-tabs { display: flex; gap: 0; background: #FFFCFA; border-bottom: 2px solid #D97757; padding: 0 16px; }
@@ -301,16 +321,35 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
     .tag { font-size: 0.74em; padding: 5px 9px; }
     .session-title { font-size: 0.88em; }
 }
+.note-box { margin-top: 8px; }
+.note-box summary { cursor: pointer; color: #888; font-size: 0.82em; padding: 2px 0; user-select: none; list-style: none; }
+.note-box summary::-webkit-details-marker { display: none; }
+.note-box summary::before { content: '📝 '; }
+.note-box[open] summary { color: #D97757; }
+.note-box textarea { width: 100%; min-height: 50px; max-height: 200px; padding: 6px 8px; margin-top: 4px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 0.88em; resize: vertical; box-sizing: border-box; }
+.note-box textarea:focus { outline: none; border-color: #D97757; }
+.note-box .note-hint { font-size: 0.72em; color: #aaa; margin-top: 2px; }
+.session.has-note .session-title::after, .picks-session.has-note .picks-session-title::after { content: ' 📝'; font-size: 0.85em; opacity: 0.6; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2c3e50; color: white; padding: 10px 18px; border-radius: 6px; font-size: 0.9em; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+.toast.show { opacity: 1; }
 </style>
 </head>
 <body>
 <div class="header">
+<div class="header-inner">
+<div class="header-text">
 <h1>ATC 2026 — Program & Abstracts</h1>
-<p>American Transplant Congress &middot; Boston &middot; June 20–24, 2026</p>
+<p>Boston &middot; June 20–24, 2026 &middot; <strong>372</strong> sessions &middot; <strong>2001</strong> abstracts</p>
 </div>
-<div class="stats-bar">
-<strong>372</strong> sessions &middot; <strong>2835</strong> presentations &middot; <strong>2001</strong> abstracts with full text
+<div class="header-actions">
+<span class="auth-user" id="auth-user"></span>
+<span class="sync-indicator" id="sync-indicator"></span>
+<button id="export-btn" type="button" title="Export starred sessions to Excel">⬇ Excel</button>
+<button id="auth-btn" type="button" title="Sign in (optional) to sync picks across devices">Sign in</button>
 </div>
+</div>
+</div>
+<div id="toast" class="toast"></div>
 <div class="view-tabs" id="view-tabs">
 <div class="view-tab active" data-view="program">Program</div>
 <div class="view-tab" data-view="picks">★ My Picks <span id="picks-count" class="picks-count-badge"></span></div>
@@ -29041,8 +29080,12 @@ renderGantt();
 
 // --- Favorites / My Picks ---
 const PICKS_KEY = 'atc26_picks_v1';
+const NOTES_KEY = 'atc26_notes_v1';
 const GANTT_BY_TID = {};
 GANTT_DATA.forEach(s => { GANTT_BY_TID[s.tid] = s; });
+
+// Cloud sync hook — replaced by Firebase module script when user is signed in.
+window.__atc = window.__atc || { cloudSync: null, notes: null, user: null };
 
 function loadPicks() {
     try {
@@ -29054,6 +29097,40 @@ function loadPicks() {
 
 function savePicks(picks) {
     localStorage.setItem(PICKS_KEY, JSON.stringify(Array.from(picks)));
+    if (window.__atc.cloudSync) window.__atc.cloudSync();
+}
+
+function loadNotes() {
+    if (window.__atc.notes) return window.__atc.notes;
+    try {
+        window.__atc.notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '{}');
+    } catch (e) {
+        window.__atc.notes = {};
+    }
+    return window.__atc.notes;
+}
+
+function saveNote(tid, text) {
+    const notes = loadNotes();
+    const trimmed = (text || '').slice(0, 500);
+    if (trimmed) notes[tid] = trimmed;
+    else delete notes[tid];
+    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+    // Reflect note presence on the session card immediately
+    document.querySelectorAll('.session[data-tid="' + tid + '"], .picks-session[data-tid="' + tid + '"]').forEach(el => {
+        el.classList.toggle('has-note', !!trimmed);
+    });
+    if (window.__atc.cloudSync) window.__atc.cloudSync();
+}
+
+function noteBoxHtml(tid) {
+    const notes = loadNotes();
+    const text = notes[tid] || '';
+    return '<details class="note-box"' + (text ? ' open' : '') + '>'
+        + '<summary>Note' + (text ? '' : ' (private)') + '</summary>'
+        + '<textarea data-note-tid="' + tid + '" maxlength="500" placeholder="Your private notes for this session...">' + escapeHtml(text) + '</textarea>'
+        + '<div class="note-hint">Saves locally. Sign in to sync across devices.</div>'
+        + '</details>';
 }
 
 function updatePicksBadge() {
@@ -29061,6 +29138,8 @@ function updatePicksBadge() {
     const badge = document.getElementById('picks-count');
     badge.textContent = picks.size > 0 ? picks.size : '';
     badge.classList.toggle('has-picks', picks.size > 0);
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) exportBtn.hidden = picks.size === 0;
 }
 
 function syncStarUI() {
@@ -29140,7 +29219,8 @@ function renderPicks() {
         }
         for (const s of day) {
             const isConflict = conflictTids.has(s.tid);
-            html += '<div class="picks-session' + (isConflict ? ' conflict' : '') + '" data-tid="' + s.tid + '">';
+            const hasNote = !!(loadNotes()[s.tid]);
+            html += '<div class="picks-session' + (isConflict ? ' conflict' : '') + (hasNote ? ' has-note' : '') + '" data-tid="' + s.tid + '">';
             html += '<div class="picks-session-header">';
             html += '<div class="picks-session-time">' + s.start + '–' + s.stop + '</div>';
             html += '<div class="picks-session-body">';
@@ -29148,7 +29228,9 @@ function renderPicks() {
             html += '<div class="picks-session-meta">' + escapeHtml(s.location) + ' · ' + escapeHtml(s.catname) + '</div>';
             html += '</div>';
             html += '<button class="star-btn starred" data-tid="' + s.tid + '" aria-label="Unstar" title="Unstar">★</button>';
-            html += '</div></div>';
+            html += '</div>';
+            html += noteBoxHtml(s.tid);
+            html += '</div>';
         }
         html += '</div>';
     }
@@ -29209,6 +29291,36 @@ document.getElementById('picks-clear').addEventListener('click', () => {
 // Initialize on load
 syncStarUI();
 updatePicksBadge();
+// Inject per-session note boxes into the static program cards (one-time)
+(function injectNoteBoxes() {
+    const notes = loadNotes();
+    document.querySelectorAll('.session[data-tid]').forEach(el => {
+        if (el.querySelector(':scope > .note-box')) return;
+        const tid = el.dataset.tid;
+        el.insertAdjacentHTML('beforeend', noteBoxHtml(tid));
+        if (notes[tid]) el.classList.add('has-note');
+    });
+})();
+// Delegated note save: typing flushes after pause (debounced inside saveNote→cloudSync)
+let noteFlushTimer = null;
+document.addEventListener('input', e => {
+    const ta = e.target.closest && e.target.closest('textarea[data-note-tid]');
+    if (!ta) return;
+    clearTimeout(noteFlushTimer);
+    noteFlushTimer = setTimeout(() => {
+        saveNote(ta.dataset.noteTid, ta.value);
+    }, 400);
+});
+document.addEventListener('blur', e => {
+    const ta = e.target.closest && e.target.closest('textarea[data-note-tid]');
+    if (!ta) return;
+    clearTimeout(noteFlushTimer);
+    saveNote(ta.dataset.noteTid, ta.value);
+}, true);
+// Stop click on note box from bubbling into picks-session click handler
+document.addEventListener('click', e => {
+    if (e.target.closest && e.target.closest('.note-box')) e.stopPropagation();
+}, true);
 
 // --- Mobile collapsible filter sections ---
 document.querySelectorAll('.filter-row.filter-collapsible .filter-header').forEach(hdr => {
@@ -29232,6 +29344,295 @@ function updateFilterChromeCounts() {
 topicTags.forEach(tag => tag.addEventListener('click', updateFilterChromeCounts));
 typeTags.forEach(tag => tag.addEventListener('click', updateFilterChromeCounts));
 updateFilterChromeCounts();
+
+// Toast helper used by auth/sync flow
+function showToast(msg, ms) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._hideTimer);
+    t._hideTimer = setTimeout(() => t.classList.remove('show'), ms || 2200);
+}
+</script>
+<script type="module">
+// ============================================================================
+// Firebase Auth (Google) + Firestore sync + Excel export.
+// To enable cloud sync, paste your firebaseConfig from the Firebase console
+// (Project settings → Your apps → Web). Until then, the site runs anonymously
+// with localStorage only, and Excel export still works on local picks.
+// ============================================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyDAoXsnRrXfWagP5gPUG1ac78OUyOFb6tU",
+    authDomain: "atc2026-agenda.firebaseapp.com",
+    projectId: "atc2026-agenda",
+    storageBucket: "atc2026-agenda.firebasestorage.app",
+    messagingSenderId: "691487981633",
+    appId: "1:691487981633:web:066389f8665681579786c0"
+};
+
+const authBtn = document.getElementById('auth-btn');
+const exportBtn = document.getElementById('export-btn');
+const authUserEl = document.getElementById('auth-user');
+const syncEl = document.getElementById('sync-indicator');
+
+// --- Excel export: works always, signed in or out ---
+async function exportToExcel() {
+    const picks = loadPicks();
+    if (picks.size === 0) {
+        showToast('No starred sessions to export. Star some first!', 2800);
+        return;
+    }
+    const notes = loadNotes();
+    let XLSX;
+    try {
+        XLSX = await import('https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs');
+    } catch (e) {
+        showToast('Could not load Excel library — check connection', 3500);
+        return;
+    }
+    const rows = [...picks].map(tid => {
+        const s = GANTT_BY_TID[tid];
+        if (!s) return null;
+        return {
+            Date: s.date,
+            Time: s.start + '–' + s.stop,
+            'Session ID': s.tid,
+            Title: s.title,
+            Location: s.location,
+            Category: s.catname,
+            Note: notes[tid] || ''
+        };
+    }).filter(Boolean).sort((a, b) => (a.Date + a.Time).localeCompare(b.Date + b.Time));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [{wch:12},{wch:14},{wch:10},{wch:60},{wch:25},{wch:18},{wch:50}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'My ATC2026 Picks');
+    const today = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, 'ATC2026-picks-' + today + '.xlsx');
+    showToast('Exported ' + rows.length + ' sessions');
+}
+exportBtn.addEventListener('click', exportToExcel);
+
+// --- Firebase: only initialize if config is filled in ---
+const configReady = firebaseConfig.apiKey && firebaseConfig.apiKey !== 'REPLACE_ME';
+if (!configReady) {
+    authBtn.textContent = 'Sign-in n/a';
+    authBtn.disabled = true;
+    authBtn.title = 'Site owner: paste firebaseConfig in index.html to enable sign-in.';
+} else {
+    const FB_VER = '10.13.2';
+    const [{ initializeApp }, authMod, fsMod] = await Promise.all([
+        import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-app.js'),
+        import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-auth.js'),
+        import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-firestore.js'),
+    ]);
+    const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, browserPopupRedirectResolver } = authMod;
+    const { getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp } = fsMod;
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUid = null;
+    let unsubscribeSnap = null;
+    let syncTimer = null;
+    let syncInFlight = null;
+
+    function setSyncStatus(state) {
+        syncEl.classList.remove('saving', 'saved');
+        if (state === 'saving') { syncEl.classList.add('saving'); syncEl.textContent = 'Syncing…'; }
+        else if (state === 'saved') { syncEl.classList.add('saved'); syncEl.textContent = 'Saved ✓'; setTimeout(() => { if (syncEl.textContent === 'Saved ✓') syncEl.textContent = ''; }, 1800); }
+        else if (state === 'error') { syncEl.textContent = 'Offline'; }
+        else { syncEl.textContent = ''; }
+    }
+
+    function picksToMap() {
+        const m = {};
+        loadPicks().forEach(tid => { m[tid] = true; });
+        return m;
+    }
+
+    function flushCloud() {
+        if (!currentUid) return;
+        setSyncStatus('saving');
+        const payload = {
+            picks: picksToMap(),
+            notes: loadNotes(),
+            updatedAt: serverTimestamp()
+        };
+        const p = setDoc(doc(db, 'users', currentUid), payload, { merge: false })
+            .then(() => setSyncStatus('saved'))
+            .catch(err => { console.error('cloudSync failed', err); setSyncStatus('error'); });
+        syncInFlight = p;
+        return p;
+    }
+
+    // Debounced cloud sync — exposed to savePicks/saveNote via window.__atc
+    window.__atc.cloudSync = function () {
+        if (!currentUid) return;
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(() => { flushCloud(); }, 350);
+    };
+
+    async function mergeOnSignIn(uid) {
+        const ref = doc(db, 'users', uid);
+        let cloud = null;
+        try {
+            const snap = await getDoc(ref);
+            if (snap.exists()) cloud = snap.data();
+        } catch (e) { console.error('initial fetch failed', e); }
+
+        const localPicks = loadPicks();
+        const localNotes = loadNotes();
+
+        if (!cloud) {
+            // First-time sync: push local up
+            await setDoc(ref, {
+                picks: picksToMap(),
+                notes: localNotes,
+                updatedAt: serverTimestamp()
+            });
+            return;
+        }
+
+        // Union picks (never lose a star)
+        const cloudPicks = cloud.picks || {};
+        const mergedPicks = new Set(Object.keys(cloudPicks));
+        let newFromLocal = 0;
+        localPicks.forEach(tid => {
+            if (!mergedPicks.has(tid)) newFromLocal++;
+            mergedPicks.add(tid);
+        });
+
+        // Notes: cloud wins per-tid when both have non-empty text
+        const cloudNotes = cloud.notes || {};
+        const mergedNotes = { ...localNotes };
+        for (const [tid, text] of Object.entries(cloudNotes)) {
+            if (text && (!mergedNotes[tid] || cloudNotes[tid])) mergedNotes[tid] = text;
+        }
+
+        // Persist merged state locally
+        localStorage.setItem(PICKS_KEY, JSON.stringify([...mergedPicks]));
+        localStorage.setItem(NOTES_KEY, JSON.stringify(mergedNotes));
+        window.__atc.notes = mergedNotes;
+
+        // Push merged back so cloud reflects union (only if anything changed)
+        if (newFromLocal > 0 || Object.keys(localNotes).some(k => localNotes[k] && localNotes[k] !== cloudNotes[k])) {
+            await setDoc(ref, {
+                picks: Object.fromEntries([...mergedPicks].map(t => [t, true])),
+                notes: mergedNotes,
+                updatedAt: serverTimestamp()
+            });
+        }
+
+        // Refresh UI: re-populate textareas + star states
+        document.querySelectorAll('textarea[data-note-tid]').forEach(ta => {
+            ta.value = mergedNotes[ta.dataset.noteTid] || '';
+        });
+        document.querySelectorAll('.session[data-tid], .picks-session[data-tid]').forEach(el => {
+            el.classList.toggle('has-note', !!mergedNotes[el.dataset.tid]);
+        });
+
+        if (newFromLocal > 0) showToast('Synced — merged ' + newFromLocal + ' local pick(s) into cloud');
+        else showToast('Welcome back — picks loaded from cloud');
+    }
+
+    function startSnapshot(uid) {
+        if (unsubscribeSnap) unsubscribeSnap();
+        unsubscribeSnap = onSnapshot(doc(db, 'users', uid), snap => {
+            // Skip echoes of our own writes
+            if (snap.metadata.hasPendingWrites) return;
+            if (!snap.exists()) return;
+            const data = snap.data();
+            const remotePicks = new Set(Object.keys(data.picks || {}));
+            const remoteNotes = data.notes || {};
+            // Only update if something differs from local
+            const local = loadPicks();
+            const localNotes = loadNotes();
+            const picksChanged = local.size !== remotePicks.size || [...remotePicks].some(t => !local.has(t));
+            const notesChanged = JSON.stringify(localNotes) !== JSON.stringify(remoteNotes);
+            if (!picksChanged && !notesChanged) return;
+            localStorage.setItem(PICKS_KEY, JSON.stringify([...remotePicks]));
+            localStorage.setItem(NOTES_KEY, JSON.stringify(remoteNotes));
+            window.__atc.notes = remoteNotes;
+            syncStarUI();
+            updatePicksBadge();
+            renderPicks();
+            // Refresh inline textareas without losing focus
+            const focused = document.activeElement;
+            document.querySelectorAll('textarea[data-note-tid]').forEach(ta => {
+                if (ta === focused) return;
+                ta.value = remoteNotes[ta.dataset.noteTid] || '';
+            });
+            document.querySelectorAll('.session[data-tid], .picks-session[data-tid]').forEach(el => {
+                el.classList.toggle('has-note', !!remoteNotes[el.dataset.tid]);
+            });
+        }, err => console.error('snapshot error', err));
+    }
+
+    onAuthStateChanged(auth, async user => {
+        if (user) {
+            currentUid = user.uid;
+            window.__atc.user = user;
+            authBtn.textContent = 'Sign out';
+            const name = user.displayName || (user.email && user.email.split('@')[0]) || '';
+            authUserEl.textContent = name;
+            authUserEl.title = user.email || '';
+            try {
+                await mergeOnSignIn(user.uid);
+                syncStarUI();
+                updatePicksBadge();
+                renderPicks();
+                startSnapshot(user.uid);
+                setSyncStatus('saved');
+            } catch (e) {
+                console.error('merge failed', e);
+                setSyncStatus('error');
+            }
+        } else {
+            currentUid = null;
+            window.__atc.user = null;
+            if (unsubscribeSnap) { unsubscribeSnap(); unsubscribeSnap = null; }
+            authBtn.textContent = 'Sign in';
+            authUserEl.textContent = '';
+            authUserEl.title = '';
+            setSyncStatus('');
+        }
+    });
+
+    // Try popup first (faster on desktop); fall back to redirect when COOP/blockers
+    // prevent the popup from communicating back — common on GitHub Pages.
+    async function signInGoogle() {
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (e) {
+            const fallbackCodes = [
+                'auth/popup-blocked',
+                'auth/popup-closed-by-user',
+                'auth/cancelled-popup-request',
+                'auth/operation-not-supported-in-this-environment',
+                'auth/web-storage-unsupported',
+            ];
+            if (fallbackCodes.includes(e.code)) {
+                console.warn('popup failed, falling back to redirect', e.code);
+                await signInWithRedirect(auth, provider);
+                return;
+            }
+            console.error('sign-in failed', e);
+            showToast('Sign-in failed: ' + (e.code || e.message), 3500);
+        }
+    }
+
+    authBtn.addEventListener('click', async () => {
+        if (currentUid) await signOut(auth);
+        else await signInGoogle();
+    });
+
+    // Handle return from signInWithRedirect (no-op if popup succeeded)
+    getRedirectResult(auth).catch(e => console.error('redirect result error', e));
+}
 </script>
 </body>
 </html>
