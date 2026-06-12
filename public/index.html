@@ -7,10 +7,30 @@
 <style>
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; background: #F9F5F1; color: #2D2D2D; line-height: 1.5; }
-.header { background: #1a1a1a; color: #F9F5F1; padding: 24px 20px; text-align: center; }
-.header h1 { margin: 0; font-size: 1.8em; }
-.header p { margin: 8px 0 0; opacity: 0.9; }
-.stats-bar { text-align: center; font-size: 0.82em; color: #666; padding: 6px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+.header { background: #1a1a1a; color: #F9F5F1; padding: 18px 20px; position: relative; }
+.header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.header-text { flex: 1 1 auto; min-width: 0; }
+.header h1 { margin: 0; font-size: 1.6em; line-height: 1.15; }
+.header p { margin: 4px 0 0; opacity: 0.85; font-size: 0.86em; }
+.header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.header-actions button { font-size: 0.82em; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #F9F5F1; border-radius: 4px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+.header-actions button:hover { background: rgba(255,255,255,0.12); border-color: #F9F5F1; }
+.header-actions button[hidden] { display: none; }
+.header-actions .auth-user { color: #F9F5F1; font-size: 0.82em; opacity: 0.85; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-actions .sync-indicator { font-size: 0.72em; opacity: 0.7; min-width: 0; color: #F9F5F1; }
+.header-actions .sync-indicator.saving { color: #F0B500; opacity: 1; }
+.header-actions .sync-indicator.saved { color: #B8E0B0; opacity: 1; }
+.stats-bar { text-align: center; font-size: 0.78em; color: #666; padding: 4px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+@media (max-width: 600px) {
+  .header { padding: 12px 14px; }
+  .header h1 { font-size: 1.2em; }
+  .header p { font-size: 0.78em; }
+  .header-inner { gap: 8px; }
+  .header-actions { width: 100%; justify-content: flex-start; gap: 6px; }
+  .header-actions button { font-size: 0.78em; padding: 5px 10px; }
+  .header-actions .auth-user { max-width: 110px; font-size: 0.76em; }
+  .stats-bar { font-size: 0.72em; padding: 3px; }
+}
 
 /* View tabs */
 .view-tabs { display: flex; gap: 0; background: #FFFCFA; border-bottom: 2px solid #D97757; padding: 0 16px; }
@@ -301,16 +321,6 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
     .tag { font-size: 0.74em; padding: 5px 9px; }
     .session-title { font-size: 0.88em; }
 }
-.auth-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 16px; background: #FFFCFA; border-bottom: 1px solid #f0e0d0; font-size: 0.85em; }
-.auth-bar button { font-size: 0.85em; padding: 6px 12px; border: 1px solid #D97757; background: white; color: #D97757; border-radius: 4px; cursor: pointer; font-weight: 500; }
-.auth-bar button:hover { background: #D97757; color: white; }
-.auth-bar button[hidden] { display: none; }
-.auth-bar .auth-user { color: #555; font-size: 0.85em; }
-.auth-bar .sync-indicator { color: #888; font-size: 0.8em; min-width: 70px; }
-.auth-bar .sync-indicator.saving { color: #E8923C; }
-.auth-bar .sync-indicator.saved { color: #4a8c3f; }
-.auth-bar .auth-help { color: #888; font-size: 0.78em; margin-left: auto; font-style: italic; }
-@media (max-width: 600px) { .auth-bar { padding: 6px 10px; gap: 6px; font-size: 0.78em; } .auth-bar .auth-help { display: none; } }
 .note-box { margin-top: 8px; }
 .note-box summary { cursor: pointer; color: #888; font-size: 0.82em; padding: 2px 0; user-select: none; list-style: none; }
 .note-box summary::-webkit-details-marker { display: none; }
@@ -326,18 +336,18 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 </head>
 <body>
 <div class="header">
+<div class="header-inner">
+<div class="header-text">
 <h1>ATC 2026 — Program & Abstracts</h1>
-<p>American Transplant Congress &middot; Boston &middot; June 20–24, 2026</p>
+<p>Boston &middot; June 20–24, 2026 &middot; <strong>372</strong> sessions &middot; <strong>2001</strong> abstracts</p>
 </div>
-<div class="auth-bar">
-<button id="auth-btn" type="button">Sign in with Google</button>
-<button id="export-btn" type="button">⬇ Export Picks to Excel</button>
+<div class="header-actions">
 <span class="auth-user" id="auth-user"></span>
 <span class="sync-indicator" id="sync-indicator"></span>
-<span class="auth-help">Sign in (optional) to sync picks &amp; notes across devices.</span>
+<button id="export-btn" type="button" title="Export starred sessions to Excel">⬇ Excel</button>
+<button id="auth-btn" type="button" title="Sign in (optional) to sync picks across devices">Sign in</button>
 </div>
-<div class="stats-bar">
-<strong>372</strong> sessions &middot; <strong>2835</strong> presentations &middot; <strong>2001</strong> abstracts with full text
+</div>
 </div>
 <div id="toast" class="toast"></div>
 <div class="view-tabs" id="view-tabs">
@@ -29128,6 +29138,8 @@ function updatePicksBadge() {
     const badge = document.getElementById('picks-count');
     badge.textContent = picks.size > 0 ? picks.size : '';
     badge.classList.toggle('has-picks', picks.size > 0);
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) exportBtn.hidden = picks.size === 0;
 }
 
 function syncStarUI() {
@@ -29405,7 +29417,7 @@ exportBtn.addEventListener('click', exportToExcel);
 // --- Firebase: only initialize if config is filled in ---
 const configReady = firebaseConfig.apiKey && firebaseConfig.apiKey !== 'REPLACE_ME';
 if (!configReady) {
-    authBtn.textContent = 'Sign-in not configured';
+    authBtn.textContent = 'Sign-in n/a';
     authBtn.disabled = true;
     authBtn.title = 'Site owner: paste firebaseConfig in index.html to enable sign-in.';
 } else {
@@ -29565,7 +29577,9 @@ if (!configReady) {
             currentUid = user.uid;
             window.__atc.user = user;
             authBtn.textContent = 'Sign out';
-            authUserEl.textContent = user.displayName || user.email || '';
+            const name = user.displayName || (user.email && user.email.split('@')[0]) || '';
+            authUserEl.textContent = name;
+            authUserEl.title = user.email || '';
             try {
                 await mergeOnSignIn(user.uid);
                 syncStarUI();
@@ -29581,8 +29595,9 @@ if (!configReady) {
             currentUid = null;
             window.__atc.user = null;
             if (unsubscribeSnap) { unsubscribeSnap(); unsubscribeSnap = null; }
-            authBtn.textContent = 'Sign in with Google';
+            authBtn.textContent = 'Sign in';
             authUserEl.textContent = '';
+            authUserEl.title = '';
             setSyncStatus('');
         }
     });
