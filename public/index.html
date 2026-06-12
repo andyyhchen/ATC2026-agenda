@@ -29464,7 +29464,11 @@ if (!configReady) {
         };
         const p = setDoc(doc(db, 'users', currentUid), payload, { merge: false })
             .then(() => setSyncStatus('saved'))
-            .catch(err => { console.error('cloudSync failed', err); setSyncStatus('error'); });
+            .catch(err => {
+                console.error('cloudSync failed', err);
+                setSyncStatus('error');
+                showToast('Cloud sync failed: ' + (err.code || err.message), 4500);
+            });
         syncInFlight = p;
         return p;
     }
@@ -29482,7 +29486,11 @@ if (!configReady) {
         try {
             const snap = await getDoc(ref);
             if (snap.exists()) cloud = snap.data();
-        } catch (e) { console.error('initial fetch failed', e); }
+        } catch (e) {
+            console.error('initial fetch failed', e);
+            showToast('Cloud read failed: ' + (e.code || e.message) + ' — check Firestore rules', 5000);
+            throw e;
+        }
 
         const localPicks = loadPicks();
         const localNotes = loadNotes();
@@ -29569,7 +29577,10 @@ if (!configReady) {
             document.querySelectorAll('.session[data-tid], .picks-session[data-tid]').forEach(el => {
                 el.classList.toggle('has-note', !!remoteNotes[el.dataset.tid]);
             });
-        }, err => console.error('snapshot error', err));
+        }, err => {
+            console.error('snapshot error', err);
+            showToast('Live sync error: ' + (err.code || err.message), 4500);
+        });
     }
 
     onAuthStateChanged(auth, async user => {
