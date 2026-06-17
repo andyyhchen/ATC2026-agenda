@@ -173,15 +173,7 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 .detail-abs-item .abs-section { margin: 4px 0; font-size: 0.9em; line-height: 1.5; }
 .detail-abs-item .abs-section strong { color: #D97757; }
 
-/* Schedule / Gantt view */
-#schedule-content { display: none; max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
-.sched-header { margin-bottom: 16px; }
-.sched-header h2 { color: #D97757; margin: 0 0 8px; font-size: 1.3em; }
-.sched-header p { color: #666; font-size: 0.9em; margin: 0; }
-.sched-topics { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; padding: 12px; background: white; border-radius: 8px; border: 1px solid #e0e0e0; }
-.sched-topic { display: inline-block; padding: 5px 12px; font-size: 0.82em; border-radius: 14px; cursor: pointer; border: 2px solid #ddd; background: white; transition: all 0.15s; font-weight: 500; }
-.sched-topic:hover { border-color: #D97757; color: #D97757; }
-.sched-topic.active { background: #D97757; color: white; border-color: #D97757; }
+/* Gantt view (used by My Team) */
 .sched-day { margin-bottom: 24px; background: white; border-radius: 8px; border: 1px solid #e0e0e0; overflow: hidden; }
 .sched-day-header { background: #f5f5f5; padding: 10px 16px; font-weight: 700; font-size: 0.95em; border-bottom: 1px solid #e0e0e0; }
 .gantt-container { position: relative; min-height: 60px; padding: 12px 0; }
@@ -231,6 +223,66 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 .picks-session-body { flex: 1; }
 .picks-session-title { font-weight: 600; font-size: 0.95em; }
 .picks-session-meta { font-size: 0.8em; color: #666; margin-top: 4px; }
+.picks-session-others { font-size: 0.78em; color: #888; margin-top: 6px; line-height: 1.4; }
+.picks-session-others .other-name { color: #555; }
+.picks-session-others .other-more { color: #999; cursor: help; }
+.picks-view-toggle { display: inline-flex; gap: 0; margin-top: 8px; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+.picks-view-btn { padding: 6px 12px; font-size: 0.85em; background: white; border: none; cursor: pointer; color: #666; border-right: 1px solid #ddd; }
+.picks-view-btn:last-child { border-right: none; }
+.picks-view-btn.active { background: #D97757; color: white; }
+.picks-view-btn:hover:not(.active) { background: #FDF1EB; color: #D97757; }
+/* My Team view */
+#team-content { display: none; max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
+.team-header h2 { color: #D97757; margin: 0 0 8px; font-size: 1.3em; }
+.team-header p { color: #666; font-size: 0.9em; margin: 0 0 8px; }
+.team-add-row { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; align-items: center; }
+.team-add-input-wrap { position: relative; flex: 1; min-width: 220px; }
+.team-add-row input { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; box-sizing: border-box; }
+.team-add-row input:focus { outline: none; border-color: #D97757; }
+.team-suggest { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1px solid #E0D6CF; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-height: 240px; overflow-y: auto; z-index: 50; }
+.team-suggest-item { padding: 8px 10px; cursor: pointer; font-size: 0.88em; border-bottom: 1px solid #F4ECE6; }
+.team-suggest-item:last-child { border-bottom: none; }
+.team-suggest-item:hover, .team-suggest-item.active { background: #FDF1EB; }
+.team-suggest-name { font-weight: 600; color: #333; }
+.team-suggest-email { color: #777; font-size: 0.92em; margin-left: 6px; }
+.team-suggest-empty { padding: 8px 10px; color: #999; font-size: 0.85em; font-style: italic; }
+.team-add-row button { padding: 8px 16px; background: #D97757; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9em; }
+.team-add-row button:hover:not(:disabled) { background: #C76847; }
+.team-add-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+#team-add-status { font-size: 0.85em; color: #666; }
+#team-add-status.error { color: #B8522A; }
+#team-add-status.success { color: #2c8a4a; }
+.team-roster-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 16px; }
+.team-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px 4px 10px; background: #FDF1EB; border: 1px solid #E8C4B0; border-radius: 999px; font-size: 0.85em; color: #333; }
+.team-chip-remove { background: none; border: none; color: #B8522A; cursor: pointer; padding: 0 4px; font-size: 1em; line-height: 1; }
+.team-chip-remove:hover { color: #8B3A1C; }
+.team-empty { text-align: center; color: #999; padding: 60px 20px; }
+.team-empty-icon { font-size: 3em; opacity: 0.3; margin-bottom: 12px; }
+.team-summary { padding: 10px 12px; background: #FDF1EB; border: 1px solid #E8C4B0; border-radius: 8px; margin: 12px 0; font-size: 0.92em; color: #5a3a28; }
+.team-summary strong { color: #B8522A; }
+.team-day-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 8px; }
+.team-day-tab { padding: 6px 12px; border: 1px solid #E0D6CF; border-radius: 6px; background: #fff; cursor: pointer; font-size: 0.85em; color: #555; font-family: inherit; }
+.team-day-tab.active { background: #D97757; border-color: #D97757; color: #fff; font-weight: 600; }
+.team-day-tab:hover:not(.active) { background: #FDF1EB; }
+.team-day-tab[disabled] { opacity: 0.45; cursor: not-allowed; }
+.team-freetime-strip { display: flex; height: 14px; margin: 4px 16px 8px 140px; border-radius: 3px; overflow: hidden; background: #f6f1ee; }
+.team-freetime-cell { flex: 1; min-width: 1px; background: transparent; }
+.team-freetime-cell.all-free { background: #2c8a4a; }
+.team-freetime-cell.most-free { background: #8fc9a3; }
+.team-freetime-cell.some-free { background: #d6e8dc; }
+.gantt-label-self { color: #2c8a4a; font-weight: 700; }
+.gantt-label-clickable { cursor: pointer; }
+.gantt-label-clickable:hover { text-decoration: underline; }
+.gantt-bar-shared { border: 2px solid rgba(0,0,0,0.35); box-shadow: 0 2px 6px rgba(0,0,0,0.28); }
+.gantt-bar-badge { display: inline-block; background: rgba(0,0,0,0.4); color: #fff; padding: 0 4px; border-radius: 2px; font-size: 0.85em; margin-right: 4px; line-height: 1.4; }
+.gantt-row.dimmed { opacity: 0.25; }
+.picks-grid-by-day { display: grid; gap: 12px; align-items: start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+.picks-day-col { min-width: 0; }
+.picks-day-col-cards { display: flex; flex-direction: column; gap: 8px; }
+.picks-day-col .picks-session { margin: 0; position: relative; padding-right: 36px; }
+.picks-day-col .picks-session-header { flex-direction: column; gap: 6px; }
+.picks-day-col .picks-session-time { min-width: 0; }
+.picks-day-col .star-btn { position: absolute; top: 6px; right: 6px; }
 
 /* Mobile responsive (≤768px) */
 @media (max-width: 768px) {
@@ -298,20 +350,25 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
     .detail-abs-item { font-size: 0.8em; padding: 8px 10px; }
     .detail-abs-item .abs-date { float: none; display: block; margin-bottom: 2px; }
 
-    /* Schedule / Gantt */
-    #schedule-content { padding: 14px 8px; }
-    .sched-topics { padding: 10px 8px; gap: 5px; }
-    .sched-topic { padding: 6px 10px; font-size: 0.78em; min-height: 32px; }
+    /* Gantt (mobile, used by My Team) */
     .gantt-axis { margin: 0 8px 8px 80px; }
     .gantt-label { width: 76px; font-size: 0.62em; padding: 0 4px; }
     .gantt-track { margin-right: 8px; }
     .gantt-bar { font-size: 0.6em; padding: 0 4px; }
     .gantt-tooltip { max-width: 280px; font-size: 0.78em; }
+    .team-freetime-strip { margin: 4px 8px 8px 80px; }
+
+    /* Team */
+    #team-content { padding: 14px 12px; }
+    .team-add-row { gap: 6px; }
+    .team-add-row input { min-width: 0; font-size: 16px; padding: 10px; }
+    .team-add-row button { min-height: 40px; }
 
     /* Picks */
     #picks-content { padding: 14px 12px; }
     .picks-session-header { flex-direction: column; gap: 4px; }
     .picks-session-time { min-width: 0; }
+    .picks-grid-by-day { gap: 8px; }
 }
 
 /* Very narrow phones */
@@ -353,7 +410,7 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 <div class="view-tabs" id="view-tabs">
 <div class="view-tab active" data-view="program">Program</div>
 <div class="view-tab" data-view="picks">★ My Picks <span id="picks-count" class="picks-count-badge"></span></div>
-<div class="view-tab" data-view="schedule">My Schedule</div>
+<div class="view-tab" data-view="team">👥 My Team</div>
 <div class="view-tab" data-view="dashboard">Competitive Intel</div>
 </div>
 <div id="program-view">
@@ -28517,32 +28574,30 @@ mark.search-hl { background: #ffe066; color: #333; padding: 0 1px; border-radius
 </div>
 </div>
 </div>
-<div id="schedule-content">
-<div class="sched-header"><h2>My Schedule — Topic Timeline</h2>
-<p>Select topics below to see a Gantt-style timeline of relevant sessions. Hover bars for details, click to jump to session.</p></div>
-<div class="sched-topics" id="sched-topics">
-<span class="sched-topic" data-topic="AI / Biomarkers / dd-cfDNA">AI / Biomarkers / dd-cfDNA</span>
-<span class="sched-topic" data-topic="Ethics/Policy/Allocation">Ethics/Policy/Allocation</span>
-<span class="sched-topic" data-topic="Heart">Heart</span>
-<span class="sched-topic" data-topic="Immunobiology &amp; Tolerance">Immunobiology &amp; Tolerance</span>
-<span class="sched-topic" data-topic="Immunosuppression &amp; Cell Therapy">Immunosuppression &amp; Cell Therapy</span>
-<span class="sched-topic" data-topic="Industry/Satellite">Industry/Satellite</span>
-<span class="sched-topic" data-topic="Infectious Disease">Infectious Disease</span>
-<span class="sched-topic" data-topic="Intestine/Multivisceral">Intestine/Multivisceral</span>
-<span class="sched-topic" data-topic="Kidney">Kidney</span>
-<span class="sched-topic" data-topic="Liver">Liver</span>
-<span class="sched-topic" data-topic="Living Donor">Living Donor</span>
-<span class="sched-topic" data-topic="Lung">Lung</span>
-<span class="sched-topic" data-topic="Machine Perfusion &amp; Organ Preservation">Machine Perfusion &amp; Organ Preservation</span>
-<span class="sched-topic" data-topic="Pancreas &amp; Islet">Pancreas &amp; Islet</span>
-<span class="sched-topic" data-topic="Pediatric">Pediatric</span>
-<span class="sched-topic" data-topic="Xenotransplantation">Xenotransplantation</span>
+<div id="team-content">
+<div class="team-header">
+<h2>👥 My Team</h2>
+<p>Add colleagues by their Google account email to see where they'll be during the conference. They must have signed in to the app at least once.</p>
+<div class="team-add-row">
+<div class="team-add-input-wrap">
+<input id="team-add-email" type="text" placeholder="Search by name or email…" autocomplete="off">
+<div id="team-add-suggest" class="team-suggest" hidden></div>
 </div>
-<div id="gantt-days"></div>
+<button id="team-add-btn" type="button">Add</button>
+<span id="team-add-status"></span>
+</div>
+</div>
+<div id="team-roster"></div>
+<div id="team-schedules"></div>
 </div>
 <div id="picks-content">
 <div class="picks-header"><h2>★ My Picks</h2>
-<p>Sessions you've starred. Conflicts (overlapping times on the same day) are highlighted.</p></div>
+<p>Sessions you've starred. Conflicts (overlapping times on the same day) are highlighted.</p>
+<div class="picks-view-toggle" id="picks-view-toggle" role="tablist" aria-label="Picks view mode">
+<button type="button" class="picks-view-btn active" data-picks-view="list" aria-pressed="true">☰ List</button>
+<button type="button" class="picks-view-btn" data-picks-view="grid" aria-pressed="false">▦ Grid</button>
+</div>
+</div>
 <div id="picks-list"></div>
 </div>
 
@@ -28556,9 +28611,9 @@ const ALL_DATES = ["2026-06-20", "2026-06-21", "2026-06-22", "2026-06-23", "2026
 const viewTabs = document.querySelectorAll('.view-tab');
 const programView = document.getElementById('program-view');
 const dashboardContent = document.getElementById('dashboard-content');
-const scheduleContent = document.getElementById('schedule-content');
 
 const picksContent = document.getElementById('picks-content');
+const teamContent = document.getElementById('team-content');
 
 viewTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -28567,8 +28622,8 @@ viewTabs.forEach(tab => {
         const view = tab.dataset.view;
         programView.style.display = (view === 'program' || view === 'grid') ? '' : 'none';
         dashboardContent.style.display = view === 'dashboard' ? 'block' : 'none';
-        scheduleContent.style.display = view === 'schedule' ? 'block' : 'none';
         picksContent.style.display = view === 'picks' ? 'block' : 'none';
+        teamContent.style.display = view === 'team' ? 'block' : 'none';
         if (view === 'grid') {
             document.getElementById('content').style.display = 'none';
             document.getElementById('grid-content').style.display = 'block';
@@ -28585,6 +28640,15 @@ viewTabs.forEach(tab => {
             syncStarUI();
             updatePicksBadge();
             renderPicks();
+        } else if (view === 'team') {
+            if (typeof window.__atc.renderTeam === 'function') {
+                window.__atc.renderTeam();
+            } else {
+                const schedules = document.getElementById('team-schedules');
+                const roster = document.getElementById('team-roster');
+                if (roster) roster.innerHTML = '';
+                if (schedules) schedules.innerHTML = '<div class="team-empty"><div class="team-empty-icon">👥</div><div>Sign in to manage your team.</div></div>';
+            }
         }
     });
 });
@@ -28603,6 +28667,28 @@ document.querySelectorAll('.view-btn').forEach(btn => {
         });
     });
 });
+
+// --- My Picks list/grid toggle ---
+(function initPicksViewToggle() {
+    const buttons = document.querySelectorAll('.picks-view-btn');
+    if (!buttons.length) return;
+    const saved = (localStorage.getItem('atc26_picks_view_v1') === 'grid') ? 'grid' : 'list';
+    buttons.forEach(b => {
+        const isActive = b.dataset.picksView === saved;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        b.addEventListener('click', () => {
+            const v = b.dataset.picksView;
+            localStorage.setItem('atc26_picks_view_v1', v);
+            buttons.forEach(x => {
+                const a = x.dataset.picksView === v;
+                x.classList.toggle('active', a);
+                x.setAttribute('aria-pressed', a ? 'true' : 'false');
+            });
+            if (typeof renderPicks === 'function') renderPicks();
+        });
+    });
+})();
 
 // --- Day tab switching ---
 const searchInput = document.getElementById('search');
@@ -28920,59 +29006,34 @@ document.querySelectorAll('.company-card').forEach(card => {
     });
 });
 
-// --- Schedule / Gantt View ---
-const schedTopics = document.querySelectorAll('#sched-topics .sched-topic');
-let activeSchedTopics = new Set();
+// --- Gantt rendering helpers (used by My Team) ---
 let ganttTooltip = null;
-
-schedTopics.forEach(tag => {
-    tag.addEventListener('click', () => {
-        tag.classList.toggle('active');
-        const topic = tag.dataset.topic;
-        if (activeSchedTopics.has(topic)) activeSchedTopics.delete(topic);
-        else activeSchedTopics.add(topic);
-        renderGantt();
-    });
-});
 
 function timeToMinutes(t) {
     const [h, m] = t.split(':').map(Number);
     return h * 60 + m;
 }
 
-function renderGantt() {
-    const container = document.getElementById('gantt-days');
-    if (activeSchedTopics.size === 0) {
-        container.innerHTML = '<div class="gantt-empty">Select one or more topics above to see your personalized schedule timeline.</div>';
-        return;
-    }
-    // Filter sessions matching any selected topic
-    const filtered = GANTT_DATA.filter(s => s.categories.some(c => activeSchedTopics.has(c)));
-    if (!filtered.length) {
-        container.innerHTML = '<div class="gantt-empty">No sessions match the selected topics.</div>';
-        return;
-    }
-
+function ganttDaysHtml(sessions) {
     let html = '';
     for (const date of ALL_DATES) {
-        const daySessions = filtered.filter(s => s.date === date);
+        const daySessions = sessions.filter(s => s.date === date);
         if (!daySessions.length) continue;
 
         const dayLabel = DAY_LABELS[date] || date;
         html += '<div class="sched-day"><div class="sched-day-header">' + dayLabel + ' (' + daySessions.length + ' sessions)</div>';
         html += '<div class="gantt-container">';
 
-        // Compute time axis for this day
         const allTimes = [];
         daySessions.forEach(s => {
             allTimes.push(timeToMinutes(s.start));
             allTimes.push(timeToMinutes(s.stop));
         });
-        const minTime = Math.min(...allTimes);
-        const maxTime = Math.max(...allTimes);
+        // Default visible window: 07:00 – 19:30. Extend if any session falls outside.
+        const minTime = Math.min(7 * 60, ...allTimes);
+        const maxTime = Math.max(19 * 60 + 30, ...allTimes);
         const timeSpan = maxTime - minTime || 60;
 
-        // Axis ticks (every hour)
         html += '<div class="gantt-axis">';
         const firstHour = Math.ceil(minTime / 60) * 60;
         for (let t = firstHour; t <= maxTime; t += 60) {
@@ -28982,30 +29043,18 @@ function renderGantt() {
         }
         html += '</div>';
 
-        // Sort by start time, then assign rows (simple greedy lane assignment)
         daySessions.sort((a,b) => timeToMinutes(a.start) - timeToMinutes(b.start) || timeToMinutes(a.stop) - timeToMinutes(b.stop));
         const lanes = [];
-        const laneAssignment = [];
         daySessions.forEach(s => {
             const sStart = timeToMinutes(s.start);
             const sEnd = timeToMinutes(s.stop);
             let placed = false;
             for (let i = 0; i < lanes.length; i++) {
-                if (lanes[i] <= sStart) {
-                    lanes[i] = sEnd;
-                    laneAssignment.push(i);
-                    placed = true;
-                    break;
-                }
+                if (lanes[i] <= sStart) { lanes[i] = sEnd; placed = true; break; }
             }
-            if (!placed) {
-                lanes.push(sEnd);
-                laneAssignment.push(lanes.length - 1);
-            }
+            if (!placed) lanes.push(sEnd);
         });
 
-        // Render bars
-        const numLanes = lanes.length;
         for (let i = 0; i < daySessions.length; i++) {
             const s = daySessions[i];
             const sStart = timeToMinutes(s.start);
@@ -29024,11 +29073,122 @@ function renderGantt() {
 
         html += '</div></div>';
     }
-    container.innerHTML = html;
+    return html;
+}
 
-    // Attach hover + click to new bars
+// Unified-row Gantt for one day: rows = teammates (self first), bars = their picks.
+// `people` = [{ uid, name, picks: GANTT_DATA-shaped[], isSelf: bool }, ...]
+// `opts` = { tidCounts: Map<tid, count>, totalPeople: int, dayLabel: string, freeStripRes: int }
+function teamGanttDayHtml(date, people, opts) {
+    opts = opts || {};
+    const tidCounts = opts.tidCounts || new Map();
+    const totalPeople = opts.totalPeople || people.length;
+    const stepMin = opts.freeStripRes || 15;
+
+    // Per-person picks for this day
+    const perDay = people.map(p => ({
+        uid: p.uid,
+        name: p.name,
+        isSelf: !!p.isSelf,
+        sessions: (p.picks || []).filter(s => s && s.date === date)
+    }));
+
+    if (!perDay.some(p => p.sessions.length)) return '';
+
+    const allTimes = [];
+    perDay.forEach(p => p.sessions.forEach(s => {
+        allTimes.push(timeToMinutes(s.start));
+        allTimes.push(timeToMinutes(s.stop));
+    }));
+    // Default visible window: 07:00 – 19:30. Extend if any session falls outside.
+    const minTime = Math.min(7 * 60, ...allTimes);
+    const maxTime = Math.max(19 * 60 + 30, ...allTimes);
+    const timeSpan = maxTime - minTime || 60;
+
+    const dayLabel = opts.dayLabel || DAY_LABELS[date] || date;
+    const totalPicks = perDay.reduce((a, p) => a + p.sessions.length, 0);
+
+    let html = '';
+    html += '<div class="sched-day"><div class="sched-day-header">' + escapeHtml(dayLabel)
+        + ' <span style="font-weight:400;color:#777;font-size:0.85em;">(' + totalPicks + ' picks across ' + totalPeople + ')</span></div>';
+    html += '<div class="gantt-container" data-day="' + date + '">';
+
+    // Time axis
+    html += '<div class="gantt-axis">';
+    const firstHour = Math.ceil(minTime / 60) * 60;
+    for (let t = firstHour; t <= maxTime; t += 60) {
+        const pct = ((t - minTime) / timeSpan * 100).toFixed(1);
+        const label = String(Math.floor(t/60)).padStart(2,'0') + ':00';
+        html += '<span class="gantt-tick" style="left:' + pct + '%">' + label + '</span>';
+    }
+    html += '</div>';
+
+    // Free-time strip: cells of stepMin minutes, count how many people are FREE in that window.
+    if (perDay.length) {
+        html += '<div class="team-freetime-strip" aria-label="Free-time strip">';
+        for (let t = minTime; t < maxTime; t += stepMin) {
+            const cellEnd = Math.min(t + stepMin, maxTime);
+            let freeCount = 0;
+            for (const p of perDay) {
+                const busy = p.sessions.some(s => {
+                    const sS = timeToMinutes(s.start);
+                    const sE = timeToMinutes(s.stop);
+                    return sS < cellEnd && sE > t;
+                });
+                if (!busy) freeCount++;
+            }
+            let cls = '';
+            if (freeCount === perDay.length && perDay.length > 0) cls = ' all-free';
+            else if (perDay.length >= 2 && freeCount === perDay.length - 1) cls = ' most-free';
+            else if (freeCount > 0 && perDay.length >= 3) cls = ' some-free';
+            const tStart = String(Math.floor(t/60)).padStart(2,'0') + ':' + String(t%60).padStart(2,'0');
+            const tEnd = String(Math.floor(cellEnd/60)).padStart(2,'0') + ':' + String(cellEnd%60).padStart(2,'0');
+            html += '<div class="team-freetime-cell' + cls + '" title="' + freeCount + '/' + perDay.length + ' free · ' + tStart + '–' + tEnd + '"></div>';
+        }
+        html += '</div>';
+    }
+
+    // One row per person
+    for (const p of perDay) {
+        const labelText = p.name || '(unnamed)';
+        const labelDisp = labelText.length > 14 ? labelText.slice(0, 13) + '…' : labelText;
+        const labelCls = 'gantt-label gantt-label-clickable' + (p.isSelf ? ' gantt-label-self' : '');
+        html += '<div class="gantt-row" data-uid="' + escapeHtml(p.uid || '') + '">';
+        html += '<div class="' + labelCls + '" title="' + escapeHtml(labelText) + (p.isSelf ? ' (you)' : '') + '" data-uid="' + escapeHtml(p.uid || '') + '">'
+            + (p.isSelf ? '🟢 ' : '') + escapeHtml(labelDisp) + '</div>';
+        html += '<div class="gantt-track">';
+        // Sort sessions by start so overlap visualization is predictable
+        const sorted = p.sessions.slice().sort((a,b) =>
+            timeToMinutes(a.start) - timeToMinutes(b.start) || timeToMinutes(a.stop) - timeToMinutes(b.stop));
+        for (const s of sorted) {
+            const sStart = timeToMinutes(s.start);
+            const sEnd = timeToMinutes(s.stop);
+            const left = ((sStart - minTime) / timeSpan * 100).toFixed(2);
+            const width = ((sEnd - sStart) / timeSpan * 100).toFixed(2);
+            const count = tidCounts.get(s.tid) || 1;
+            const shared = count >= 2;
+            const safeTitle = (s.title || '').replace(/"/g, '&quot;');
+            const barCls = 'gantt-bar' + (shared ? ' gantt-bar-shared' : '');
+            html += '<div class="' + barCls + '" style="left:' + left + '%; width:' + width + '%; background:#' + s.catcolor + ';" '
+                + 'data-tid="' + s.tid + '" data-title="' + safeTitle + '" '
+                + 'data-time="' + s.start + '–' + s.stop + '" data-loc="' + escapeHtml(s.location || '') + '" '
+                + 'data-talks="' + s.talk_count + ' talks" data-type="' + escapeHtml(s.catname || '') + '">';
+            if (shared) html += '<span class="gantt-bar-badge">' + count + '/' + totalPeople + '</span>';
+            html += '<span class="gantt-bar-text">' + escapeHtml((s.title || '').slice(0, 50)) + '</span>';
+            html += '</div>';
+        }
+        html += '</div></div>';
+    }
+
+    html += '</div></div>';
+    return html;
+}
+
+function attachGanttBarHandlers(container) {
     container.querySelectorAll('.gantt-bar').forEach(bar => {
-        bar.addEventListener('mouseenter', (e) => {
+        if (bar.dataset.handlersAttached === '1') return;
+        bar.dataset.handlersAttached = '1';
+        bar.addEventListener('mouseenter', () => {
             if (!ganttTooltip) {
                 ganttTooltip = document.createElement('div');
                 ganttTooltip.className = 'gantt-tooltip';
@@ -29048,11 +29208,11 @@ function renderGantt() {
         });
         bar.addEventListener('click', () => {
             const tid = bar.dataset.tid;
-            // Switch to program list view and scroll to session
             viewTabs.forEach(t => t.classList.toggle('active', t.dataset.view === 'program'));
             programView.style.display = '';
-            scheduleContent.style.display = 'none';
             dashboardContent.style.display = 'none';
+            picksContent.style.display = 'none';
+            teamContent.style.display = 'none';
             document.getElementById('content').style.display = '';
             document.getElementById('grid-content').style.display = 'none';
             document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.subview === 'list'));
@@ -29073,7 +29233,6 @@ function renderGantt() {
         });
     });
 }
-renderGantt();
 
 // --- Favorites / My Picks ---
 const PICKS_KEY = 'atc26_picks_v1';
@@ -29095,6 +29254,11 @@ function loadPicks() {
 function savePicks(picks) {
     localStorage.setItem(PICKS_KEY, JSON.stringify(Array.from(picks)));
     if (window.__atc.cloudSync) window.__atc.cloudSync();
+    if (window.__atc.mirrorPicks) window.__atc.mirrorPicks();
+    if (window.__atc.renderTeam) {
+        const teamContent = document.getElementById('team-content');
+        if (teamContent && teamContent.style.display !== 'none') window.__atc.renderTeam();
+    }
 }
 
 function loadNotes() {
@@ -29167,6 +29331,29 @@ function timeToMin(t) {
     return h * 60 + m;
 }
 
+const PICKS_VIEW_KEY = 'atc26_picks_view_v1';
+function getPicksView() {
+    const v = localStorage.getItem(PICKS_VIEW_KEY);
+    return v === 'grid' ? 'grid' : 'list';
+}
+function setPicksView(v) {
+    localStorage.setItem(PICKS_VIEW_KEY, v === 'grid' ? 'grid' : 'list');
+}
+
+function othersHtml(tid) {
+    const map = (window.__atc && window.__atc.othersByTid) || {};
+    const others = map[tid] || [];
+    if (!others.length) return '';
+    const MAX = 3;
+    const head = others.slice(0, MAX).map(o => '<span class="other-name">' + escapeHtml(o.name) + '</span>').join(', ');
+    let tail = '';
+    if (others.length > MAX) {
+        const rest = others.slice(MAX).map(o => o.name).join(', ');
+        tail = ' <span class="other-more" title="' + escapeHtml(rest) + '">+' + (others.length - MAX) + '</span>';
+    }
+    return '<div class="picks-session-others">Also picked by: ' + head + tail + '</div>';
+}
+
 function renderPicks() {
     const picks = loadPicks();
     const list = document.getElementById('picks-list');
@@ -29189,11 +29376,40 @@ function renderPicks() {
         list.innerHTML = '<div class="picks-empty">Starred sessions could not be found in current data.</div>';
         return;
     }
-    let html = '';
-    let totalConflicts = 0;
-    for (const date of sortedDates) {
+    const viewMode = getPicksView();
+
+    function dayBlockHtml(date, day, conflictTids) {
+        const dayLabel = DAY_LABELS[date] || date;
+        let h = '';
+        h += '<div class="picks-day-header">' + dayLabel + ' (' + day.length + ' picks';
+        if (conflictTids.size > 0) h += ', ' + conflictTids.size + ' with conflicts';
+        h += ')</div>';
+        if (conflictTids.size > 0) {
+            h += '<div class="picks-conflict-warn">⚠ ' + conflictTids.size + ' session(s) overlap. Consider dropping one.</div>';
+        }
+        const cards = day.map(s => {
+            const isConflict = conflictTids.has(s.tid);
+            const hasNote = !!(loadNotes()[s.tid]);
+            let c = '';
+            c += '<div class="picks-session' + (isConflict ? ' conflict' : '') + (hasNote ? ' has-note' : '') + '" data-tid="' + s.tid + '">';
+            c += '<div class="picks-session-header">';
+            c += '<div class="picks-session-time">' + s.start + '–' + s.stop + '</div>';
+            c += '<div class="picks-session-body">';
+            c += '<div class="picks-session-title">' + escapeHtml(s.title) + '</div>';
+            c += '<div class="picks-session-meta">' + escapeHtml(s.location) + ' · ' + escapeHtml(s.catname) + '</div>';
+            c += othersHtml(s.tid);
+            c += '</div>';
+            c += '<button class="star-btn starred" data-tid="' + s.tid + '" aria-label="Unstar" title="Unstar">★</button>';
+            c += '</div>';
+            c += noteBoxHtml(s.tid);
+            c += '</div>';
+            return c;
+        }).join('');
+        return { header: h, cards };
+    }
+
+    const days = sortedDates.map(date => {
         const day = sessionsByDate[date].slice().sort((a, b) => timeToMin(a.start) - timeToMin(b.start));
-        // Detect conflicts (overlapping intervals)
         const conflictTids = new Set();
         for (let i = 0; i < day.length; i++) {
             for (let j = i + 1; j < day.length; j++) {
@@ -29205,31 +29421,27 @@ function renderPicks() {
                 }
             }
         }
-        totalConflicts += conflictTids.size;
-        const dayLabel = DAY_LABELS[date] || date;
-        html += '<div class="picks-day">';
-        html += '<div class="picks-day-header">' + dayLabel + ' (' + day.length + ' picks';
-        if (conflictTids.size > 0) html += ', ' + conflictTids.size + ' with conflicts';
-        html += ')</div>';
-        if (conflictTids.size > 0) {
-            html += '<div class="picks-conflict-warn">⚠ ' + conflictTids.size + ' session(s) overlap. Consider dropping one.</div>';
-        }
-        for (const s of day) {
-            const isConflict = conflictTids.has(s.tid);
-            const hasNote = !!(loadNotes()[s.tid]);
-            html += '<div class="picks-session' + (isConflict ? ' conflict' : '') + (hasNote ? ' has-note' : '') + '" data-tid="' + s.tid + '">';
-            html += '<div class="picks-session-header">';
-            html += '<div class="picks-session-time">' + s.start + '–' + s.stop + '</div>';
-            html += '<div class="picks-session-body">';
-            html += '<div class="picks-session-title">' + escapeHtml(s.title) + '</div>';
-            html += '<div class="picks-session-meta">' + escapeHtml(s.location) + ' · ' + escapeHtml(s.catname) + '</div>';
-            html += '</div>';
-            html += '<button class="star-btn starred" data-tid="' + s.tid + '" aria-label="Unstar" title="Unstar">★</button>';
-            html += '</div>';
-            html += noteBoxHtml(s.tid);
+        return { date, day, conflictTids };
+    });
+
+    let html = '';
+    if (viewMode === 'grid') {
+        // One column per day with picks. Equal-width columns, horizontal scroll on overflow.
+        const cols = days.length;
+        html += '<div class="picks-grid-by-day" style="grid-template-columns: repeat(' + cols + ', minmax(240px, 1fr));">';
+        for (const { date, day, conflictTids } of days) {
+            const block = dayBlockHtml(date, day, conflictTids);
+            html += '<div class="picks-day-col">';
+            html += block.header;
+            html += '<div class="picks-day-col-cards">' + block.cards + '</div>';
             html += '</div>';
         }
         html += '</div>';
+    } else {
+        for (const { date, day, conflictTids } of days) {
+            const block = dayBlockHtml(date, day, conflictTids);
+            html += '<div class="picks-day">' + block.header + block.cards + '</div>';
+        }
     }
     list.innerHTML = html;
     // Wire star buttons in picks list to remove + click-through to program
@@ -29253,7 +29465,7 @@ function renderPicks() {
             programView.style.display = '';
             picksContent.style.display = 'none';
             dashboardContent.style.display = 'none';
-            scheduleContent.style.display = 'none';
+            teamContent.style.display = 'none';
             document.getElementById('content').style.display = '';
             document.getElementById('grid-content').style.display = 'none';
             const target = document.querySelector('.session[data-tid="' + tid + '"]');
@@ -29417,7 +29629,7 @@ if (!configReady) {
         import('https://www.gstatic.com/firebasejs/' + FB_VER + '/firebase-firestore.js'),
     ]);
     const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, browserPopupRedirectResolver } = authMod;
-    const { getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp } = fsMod;
+    const { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, onSnapshot, serverTimestamp } = fsMod;
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -29428,6 +29640,13 @@ if (!configReady) {
     let unsubscribeSnap = null;
     let syncTimer = null;
     let syncInFlight = null;
+    // Track which tids we've already mirrored to /sessions/{tid}/pickedBy/{uid}
+    // so a star toggle only writes the diff (vs. rewriting all on every flush).
+    let mirroredTids = new Set();
+    // tid -> unsubscribe fn for the /sessions/{tid}/pickedBy listener
+    const attendeeUnsubs = new Map();
+    // tid -> [{ uid, name }, ...] (excluding self) — read by renderPicks via window.__atc.othersByTid
+    window.__atc.othersByTid = {};
 
     function setSyncStatus(state) {
         syncEl.classList.remove('saving', 'saved');
@@ -29468,6 +29687,483 @@ if (!configReady) {
         clearTimeout(syncTimer);
         syncTimer = setTimeout(() => { flushCloud(); }, 350);
     };
+
+    function pickerName() {
+        const u = auth.currentUser;
+        if (!u) return 'Anonymous';
+        return u.displayName || (u.email && u.email.split('@')[0]) || 'Anonymous';
+    }
+
+    // Mirror the current pick set to /sessions/{tid}/pickedBy/{uid} and /profiles/{uid}.picks
+    async function mirrorPicksDiff() {
+        if (!currentUid) return;
+        const current = loadPicks();
+        const name = pickerName();
+        const adds = [];
+        const removes = [];
+        current.forEach(tid => { if (!mirroredTids.has(tid)) adds.push(tid); });
+        mirroredTids.forEach(tid => { if (!current.has(tid)) removes.push(tid); });
+        if (!adds.length && !removes.length) return;
+        try {
+            await Promise.all([
+                ...adds.map(tid => setDoc(doc(db, 'sessions', tid, 'pickedBy', currentUid), { name, ts: serverTimestamp() })),
+                ...removes.map(tid => deleteDoc(doc(db, 'sessions', tid, 'pickedBy', currentUid))),
+                // Mirror full pick set onto the public profile so teammates can read it via a single getDoc.
+                setDoc(doc(db, 'profiles', currentUid), {
+                    picks: picksToMap(),
+                    updatedAt: serverTimestamp(),
+                }, { merge: true }),
+            ]);
+            adds.forEach(t => mirroredTids.add(t));
+            removes.forEach(t => mirroredTids.delete(t));
+            // Keep attendee subscriptions in sync with the pick set
+            adds.forEach(subscribeAttendees);
+            removes.forEach(unsubscribeAttendees);
+        } catch (err) {
+            console.error('mirrorPicks failed', err);
+            showToast('Sharing pick failed: ' + (err.code || err.message) + ' — check Firestore rules', 4500);
+        }
+    }
+    window.__atc.mirrorPicks = mirrorPicksDiff;
+
+    function subscribeAttendees(tid) {
+        if (!currentUid) return;
+        if (attendeeUnsubs.has(tid)) return;
+        const colRef = collection(db, 'sessions', tid, 'pickedBy');
+        const unsub = onSnapshot(colRef, snap => {
+            const others = [];
+            snap.forEach(d => {
+                if (d.id === currentUid) return;
+                const data = d.data() || {};
+                others.push({ uid: d.id, name: data.name || 'Anonymous' });
+            });
+            others.sort((a, b) => a.name.localeCompare(b.name));
+            window.__atc.othersByTid[tid] = others;
+            // Re-render only if My Picks tab is currently visible (avoid wasted work on Program)
+            if (picksContent && picksContent.style.display !== 'none') renderPicks();
+        }, err => {
+            console.error('attendees snapshot error for', tid, err);
+        });
+        attendeeUnsubs.set(tid, unsub);
+    }
+
+    function unsubscribeAttendees(tid) {
+        const unsub = attendeeUnsubs.get(tid);
+        if (unsub) { try { unsub(); } catch (e) {} attendeeUnsubs.delete(tid); }
+        delete window.__atc.othersByTid[tid];
+    }
+
+    function teardownAllAttendeeSubs() {
+        attendeeUnsubs.forEach(unsub => { try { unsub(); } catch (e) {} });
+        attendeeUnsubs.clear();
+        window.__atc.othersByTid = {};
+    }
+
+    // ---- My Team ----
+    // teamRoster: uid -> { name, email, addedAt }
+    const teamRoster = new Map();
+    // teamPicksCache: uid -> [GANTT_DATA-shaped session objects]
+    const teamPicksCache = new Map();
+    // teamPicksUnsubs: uid -> unsubscribe fn for that teammate's picks listener
+    const teamPicksUnsubs = new Map();
+    let teamRosterUnsub = null;
+    // allProfiles: uid -> { displayName, email } — populated by a live listener so
+    // the Add input can autocomplete by name or email.
+    const allProfiles = new Map();
+    let allProfilesUnsub = null;
+
+    function subscribeAllProfiles() {
+        if (allProfilesUnsub) return;
+        allProfilesUnsub = onSnapshot(collection(db, 'profiles'), snap => {
+            allProfiles.clear();
+            snap.forEach(d => {
+                const data = d.data() || {};
+                allProfiles.set(d.id, {
+                    displayName: data.displayName || '',
+                    email: (data.email || '').toLowerCase(),
+                });
+            });
+            // If suggestions are open, refresh them.
+            const sug = document.getElementById('team-add-suggest');
+            const inp = document.getElementById('team-add-email');
+            if (sug && inp && !sug.hidden) renderTeamSuggest(inp.value);
+        }, err => {
+            console.error('profiles index snapshot error', err);
+        });
+    }
+
+    function teardownAllProfiles() {
+        if (allProfilesUnsub) { try { allProfilesUnsub(); } catch (e) {} allProfilesUnsub = null; }
+        allProfiles.clear();
+    }
+
+    function teardownTeam() {
+        if (teamRosterUnsub) { try { teamRosterUnsub(); } catch (e) {} teamRosterUnsub = null; }
+        teamPicksUnsubs.forEach(u => { try { u(); } catch (e) {} });
+        teamPicksUnsubs.clear();
+        teamRoster.clear();
+        teamPicksCache.clear();
+    }
+
+    function subscribeTeam() {
+        if (!currentUid) return;
+        if (teamRosterUnsub) return;
+        const colRef = collection(db, 'teams', currentUid, 'members');
+        teamRosterUnsub = onSnapshot(colRef, snap => {
+            const seen = new Set();
+            snap.forEach(d => {
+                seen.add(d.id);
+                teamRoster.set(d.id, d.data() || {});
+                if (!teamPicksUnsubs.has(d.id)) subscribeTeammatePicks(d.id);
+            });
+            // Removed teammates: unsubscribe + drop cache
+            for (const uid of [...teamRoster.keys()]) {
+                if (!seen.has(uid)) {
+                    teamRoster.delete(uid);
+                    teamPicksCache.delete(uid);
+                    const u = teamPicksUnsubs.get(uid);
+                    if (u) { try { u(); } catch (e) {} teamPicksUnsubs.delete(uid); }
+                }
+            }
+            if (teamContent && teamContent.style.display !== 'none') renderTeam();
+        }, err => {
+            console.error('team roster snapshot error', err);
+            showToast('Team sync error: ' + (err.code || err.message), 4500);
+        });
+    }
+
+    function subscribeTeammatePicks(uid) {
+        if (teamPicksUnsubs.has(uid)) return;
+        const unsub = onSnapshot(doc(db, 'profiles', uid), snap => {
+            const data = snap.exists() ? (snap.data() || {}) : {};
+            const sessions = Object.keys(data.picks || {})
+                .map(tid => GANTT_BY_TID[tid])
+                .filter(Boolean);
+            teamPicksCache.set(uid, sessions);
+            if (teamContent && teamContent.style.display !== 'none') renderTeam();
+        }, err => {
+            console.error('teammate profile snapshot error', uid, err);
+        });
+        teamPicksUnsubs.set(uid, unsub);
+    }
+
+    async function addTeammate(rawEmail) {
+        const email = (rawEmail || '').trim().toLowerCase();
+        const statusEl = document.getElementById('team-add-status');
+        const setStatus = (msg, cls) => {
+            if (!statusEl) return;
+            statusEl.textContent = msg;
+            statusEl.className = cls || '';
+        };
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setStatus('Enter a valid email.', 'error');
+            return;
+        }
+        if (!currentUid) {
+            setStatus('Sign in first.', 'error');
+            return;
+        }
+        if (auth.currentUser && (auth.currentUser.email || '').toLowerCase() === email) {
+            setStatus("That's you, can't add yourself.", 'error');
+            return;
+        }
+        setStatus('Looking up…');
+        try {
+            const profilesQ = query(collection(db, 'profiles'), where('email', '==', email));
+            const result = await getDocs(profilesQ);
+            if (result.empty) {
+                setStatus('No user with that email — they need to sign in to the app first.', 'error');
+                return;
+            }
+            const teammateDoc = result.docs[0];
+            const teammateUid = teammateDoc.id;
+            const teammateData = teammateDoc.data() || {};
+            if (teamRoster.has(teammateUid)) {
+                setStatus('Already on your team.', 'error');
+                return;
+            }
+            await setDoc(doc(db, 'teams', currentUid, 'members', teammateUid), {
+                name: teammateData.displayName || email,
+                email,
+                addedAt: serverTimestamp(),
+            });
+            setStatus('Added ' + (teammateData.displayName || email) + '.', 'success');
+            const input = document.getElementById('team-add-email');
+            if (input) input.value = '';
+        } catch (err) {
+            console.error('addTeammate failed', err);
+            setStatus('Add failed: ' + (err.code || err.message), 'error');
+        }
+    }
+
+    async function removeTeammate(teammateUid) {
+        if (!currentUid) return;
+        try {
+            await deleteDoc(doc(db, 'teams', currentUid, 'members', teammateUid));
+        } catch (err) {
+            console.error('removeTeammate failed', err);
+            showToast('Remove failed: ' + (err.code || err.message), 4000);
+        }
+    }
+
+    window.__atc.renderTeam = renderTeam;
+    const TEAM_DAY_KEY = 'atc26_team_day_v1';
+    function renderTeam() {
+        const roster = document.getElementById('team-roster');
+        const schedules = document.getElementById('team-schedules');
+        if (!roster || !schedules) return;
+        if (!currentUid) {
+            roster.innerHTML = '';
+            schedules.innerHTML = '<div class="team-empty"><div class="team-empty-icon">👥</div><div>Sign in to manage your team.</div></div>';
+            return;
+        }
+        // Roster chips (empty list is fine — unified Gantt still renders below)
+        const chips = [...teamRoster.entries()].map(([uid, m]) => {
+            const label = escapeHtml(m.name || m.email || uid);
+            return '<span class="team-chip" data-uid="' + uid + '">' + label
+                + '<button class="team-chip-remove" type="button" data-remove-uid="' + uid + '" aria-label="Remove ' + label + '" title="Remove">×</button>'
+                + '</span>';
+        }).join('');
+        roster.innerHTML = teamRoster.size
+            ? '<div class="team-roster-list">' + chips + '</div>'
+            : '';
+        roster.querySelectorAll('.team-chip-remove').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                removeTeammate(btn.dataset.removeUid);
+            });
+        });
+
+        // Build the people list: self first, then teammates in roster order.
+        const myName = (typeof getMyName === 'function' ? getMyName() : null)
+            || (auth.currentUser && (auth.currentUser.displayName || (auth.currentUser.email || '').split('@')[0]))
+            || 'Me';
+        const myPicks = [...loadPicks()].map(tid => GANTT_BY_TID[tid]).filter(Boolean);
+        const people = [{
+            uid: currentUid || 'self',
+            name: myName,
+            picks: myPicks,
+            isSelf: true
+        }];
+        for (const [uid, m] of teamRoster.entries()) {
+            const picks = teamPicksCache.get(uid) || [];
+            people.push({
+                uid,
+                name: m.name || m.email || uid,
+                picks,
+                isSelf: false
+            });
+        }
+
+        // Pre-compute per-tid count across all people (for shared-bar emphasis)
+        const tidCounts = new Map();
+        const peopleWithAnyPick = people.filter(p => p.picks && p.picks.length).length;
+        const allTidsSet = new Set();
+        for (const p of people) {
+            const seen = new Set();  // each person counts once per tid
+            for (const s of (p.picks || [])) {
+                if (!s || seen.has(s.tid)) continue;
+                seen.add(s.tid);
+                allTidsSet.add(s.tid);
+                tidCounts.set(s.tid, (tidCounts.get(s.tid) || 0) + 1);
+            }
+        }
+        let coAttended = 0;
+        tidCounts.forEach(c => { if (c >= 2) coAttended++; });
+
+        // Summary line
+        const totalPeople = people.length;
+        let summaryHtml = '<div class="team-summary">';
+        summaryHtml += '<strong>Your team — ' + totalPeople + ' ' + (totalPeople === 1 ? 'person' : 'people')
+            + '</strong> · ' + allTidsSet.size + ' unique pick' + (allTidsSet.size === 1 ? '' : 's')
+            + ' · ' + coAttended + ' co-attended session' + (coAttended === 1 ? '' : 's');
+        if (peopleWithAnyPick === 0) summaryHtml += ' · <em>nobody has picked anything yet</em>';
+        summaryHtml += '</div>';
+
+        // Days that have at least one pick from anyone
+        const daysWithPicks = ALL_DATES.filter(d =>
+            people.some(p => (p.picks || []).some(s => s && s.date === d)));
+
+        if (daysWithPicks.length === 0) {
+            schedules.innerHTML = summaryHtml
+                + '<div class="team-empty"><div class="team-empty-icon">📅</div>'
+                + '<div>No picks yet — star sessions in the Program tab to see them here.</div></div>';
+            return;
+        }
+
+        // Decide which day to show. Persisted choice → "all" or a specific date that still has picks.
+        let stored = null;
+        try { stored = localStorage.getItem(TEAM_DAY_KEY); } catch (e) {}
+        let activeDay;
+        if (stored === 'all') activeDay = 'all';
+        else if (stored && daysWithPicks.indexOf(stored) >= 0) activeDay = stored;
+        else activeDay = daysWithPicks[0];
+
+        // Day tabs (All days + each conference day; days without picks shown disabled)
+        let tabsHtml = '<div class="team-day-tabs" role="tablist">';
+        tabsHtml += '<button type="button" class="team-day-tab' + (activeDay === 'all' ? ' active' : '')
+            + '" data-day="all">All days</button>';
+        for (const d of ALL_DATES) {
+            const has = daysWithPicks.indexOf(d) >= 0;
+            const cls = 'team-day-tab' + (activeDay === d ? ' active' : '');
+            tabsHtml += '<button type="button" class="' + cls + '" data-day="' + d + '"'
+                + (has ? '' : ' disabled')
+                + ' title="' + (DAY_LABELS[d] || d) + (has ? '' : ' — no picks') + '">'
+                + escapeHtml(DAY_LABELS[d] || d) + '</button>';
+        }
+        tabsHtml += '</div>';
+
+        // Body: one or more days of unified Gantt
+        const daysToRender = activeDay === 'all' ? daysWithPicks : [activeDay];
+        let bodyHtml = '';
+        for (const d of daysToRender) {
+            bodyHtml += teamGanttDayHtml(d, people, {
+                tidCounts,
+                totalPeople,
+                dayLabel: DAY_LABELS[d] || d,
+                freeStripRes: 15
+            });
+        }
+
+        schedules.innerHTML = summaryHtml + tabsHtml + bodyHtml;
+        attachGanttBarHandlers(schedules);
+
+        // Wire day tabs
+        schedules.querySelectorAll('.team-day-tab').forEach(btn => {
+            if (btn.disabled) return;
+            btn.addEventListener('click', () => {
+                const d = btn.dataset.day;
+                try { localStorage.setItem(TEAM_DAY_KEY, d); } catch (e) {}
+                renderTeam();
+            });
+        });
+
+        // Click-to-focus: clicking a person's label dims all other rows in that day.
+        // Click the same focused label again (or any focused-row label) to un-dim.
+        schedules.querySelectorAll('.gantt-container').forEach(container => {
+            container.querySelectorAll('.gantt-label-clickable').forEach(label => {
+                label.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const targetUid = label.dataset.uid;
+                    const currentlyFocused = container.dataset.focusUid || '';
+                    if (currentlyFocused === targetUid) {
+                        delete container.dataset.focusUid;
+                        container.querySelectorAll('.gantt-row').forEach(r => r.classList.remove('dimmed'));
+                    } else {
+                        container.dataset.focusUid = targetUid;
+                        container.querySelectorAll('.gantt-row').forEach(r => {
+                            r.classList.toggle('dimmed', r.dataset.uid !== targetUid);
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    // Live autocomplete: filter the in-memory profiles index by name OR email substring.
+    let suggestActiveIdx = -1;
+    function teamSuggestMatches(qRaw) {
+        const q = (qRaw || '').trim().toLowerCase();
+        if (!q) return [];
+        const meEmail = (auth.currentUser && (auth.currentUser.email || '').toLowerCase()) || '';
+        const out = [];
+        for (const [uid, p] of allProfiles.entries()) {
+            if (uid === currentUid) continue;
+            if (p.email && p.email === meEmail) continue;
+            if (teamRoster.has(uid)) continue;  // already added
+            const name = (p.displayName || '').toLowerCase();
+            const email = (p.email || '').toLowerCase();
+            if (name.includes(q) || email.includes(q)) {
+                out.push({ uid, name: p.displayName || '(no name)', email: p.email || '' });
+            }
+            if (out.length >= 8) break;
+        }
+        return out;
+    }
+    function renderTeamSuggest(qRaw) {
+        const sug = document.getElementById('team-add-suggest');
+        if (!sug) return;
+        const q = (qRaw || '').trim();
+        if (!q) { sug.hidden = true; sug.innerHTML = ''; suggestActiveIdx = -1; return; }
+        const matches = teamSuggestMatches(q);
+        if (!matches.length) {
+            sug.innerHTML = '<div class="team-suggest-empty">No matching user — they need to sign in to the app first.</div>';
+            sug.hidden = false;
+            suggestActiveIdx = -1;
+            return;
+        }
+        sug.innerHTML = matches.map((m, i) =>
+            '<div class="team-suggest-item' + (i === suggestActiveIdx ? ' active' : '') + '" data-email="' + escapeHtml(m.email) + '">'
+            + '<span class="team-suggest-name">' + escapeHtml(m.name) + '</span>'
+            + '<span class="team-suggest-email">' + escapeHtml(m.email) + '</span>'
+            + '</div>'
+        ).join('');
+        sug.hidden = false;
+        sug.querySelectorAll('.team-suggest-item').forEach(el => {
+            el.addEventListener('mousedown', (e) => {
+                e.preventDefault();  // keep input focused
+                const email = el.dataset.email;
+                const input = document.getElementById('team-add-email');
+                if (input) input.value = email;
+                sug.hidden = true;
+                sug.innerHTML = '';
+                suggestActiveIdx = -1;
+                addTeammate(email);
+            });
+        });
+    }
+
+    // Wire up the Add button + autocomplete (the input/button live in the static DOM)
+    (function wireTeamAdd() {
+        const btn = document.getElementById('team-add-btn');
+        const input = document.getElementById('team-add-email');
+        const sug = document.getElementById('team-add-suggest');
+        if (btn) btn.addEventListener('click', () => addTeammate(input && input.value));
+        if (input) {
+            input.addEventListener('input', () => {
+                suggestActiveIdx = -1;
+                renderTeamSuggest(input.value);
+            });
+            input.addEventListener('focus', () => {
+                if (input.value.trim()) renderTeamSuggest(input.value);
+            });
+            input.addEventListener('blur', () => {
+                // Delay so click handlers on suggestions can fire first.
+                setTimeout(() => { if (sug) sug.hidden = true; }, 120);
+            });
+            input.addEventListener('keydown', e => {
+                const items = sug ? sug.querySelectorAll('.team-suggest-item') : [];
+                if (e.key === 'ArrowDown' && items.length) {
+                    e.preventDefault();
+                    suggestActiveIdx = (suggestActiveIdx + 1) % items.length;
+                    renderTeamSuggest(input.value);
+                } else if (e.key === 'ArrowUp' && items.length) {
+                    e.preventDefault();
+                    suggestActiveIdx = (suggestActiveIdx - 1 + items.length) % items.length;
+                    renderTeamSuggest(input.value);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    let picked = null;
+                    if (suggestActiveIdx >= 0 && items[suggestActiveIdx]) {
+                        picked = items[suggestActiveIdx].dataset.email;
+                    } else if (items.length === 1) {
+                        picked = items[0].dataset.email;
+                    }
+                    if (picked) {
+                        input.value = picked;
+                        if (sug) { sug.hidden = true; sug.innerHTML = ''; }
+                        suggestActiveIdx = -1;
+                        addTeammate(picked);
+                    } else {
+                        addTeammate(input.value);
+                    }
+                } else if (e.key === 'Escape') {
+                    if (sug) sug.hidden = true;
+                    suggestActiveIdx = -1;
+                }
+            });
+        }
+    })();
 
     async function mergeOnSignIn(uid) {
         const ref = doc(db, 'users', uid);
@@ -29536,6 +30232,13 @@ if (!configReady) {
         else showToast('Welcome back — picks loaded from cloud');
     }
 
+    // After sign-in: ensure /sessions/*/pickedBy/{uid} matches the local pick set.
+    // Uses the same diff machinery as toggle-time mirror, but starts from empty.
+    async function reconcilePickedByOnSignIn() {
+        mirroredTids = new Set(); // treat cloud-side mirror state as unknown
+        await mirrorPicksDiff();
+    }
+
     function startSnapshot(uid) {
         if (unsubscribeSnap) unsubscribeSnap();
         unsubscribeSnap = onSnapshot(doc(db, 'users', uid), snap => {
@@ -29557,6 +30260,8 @@ if (!configReady) {
             syncStarUI();
             updatePicksBadge();
             renderPicks();
+            // Picks may have been added/removed on another device; reconcile mirror + attendee subs.
+            if (picksChanged) mirrorPicksDiff();
             // Refresh inline textareas without losing focus
             const focused = document.activeElement;
             document.querySelectorAll('textarea[data-note-tid]').forEach(ta => {
@@ -29587,6 +30292,23 @@ if (!configReady) {
                 renderPicks();
                 startSnapshot(user.uid);
                 setSyncStatus('saved');
+                // Mirror picks into per-session attendee index, then start listening
+                await reconcilePickedByOnSignIn();
+                loadPicks().forEach(subscribeAttendees);
+                // Upsert public profile so others can find this user by email
+                try {
+                    await setDoc(doc(db, 'profiles', user.uid), {
+                        email: (user.email || '').toLowerCase(),
+                        displayName: name || 'Anonymous',
+                        updatedAt: serverTimestamp(),
+                    }, { merge: true });
+                } catch (e) {
+                    console.error('profile upsert failed', e);
+                }
+                // Start team sync + global profile autocomplete index
+                subscribeTeam();
+                subscribeAllProfiles();
+                if (teamContent && teamContent.style.display !== 'none') renderTeam();
             } catch (e) {
                 console.error('merge failed', e);
                 setSyncStatus('error');
@@ -29595,6 +30317,12 @@ if (!configReady) {
             currentUid = null;
             window.__atc.user = null;
             if (unsubscribeSnap) { unsubscribeSnap(); unsubscribeSnap = null; }
+            teardownAllAttendeeSubs();
+            teardownTeam();
+            teardownAllProfiles();
+            mirroredTids = new Set();
+            renderPicks();
+            if (teamContent && teamContent.style.display !== 'none') renderTeam();
             authBtn.textContent = 'Sign in';
             authUserEl.textContent = '';
             authUserEl.title = '';
